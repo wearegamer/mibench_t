@@ -260,7 +260,7 @@
 #  Mail jeff@cs.usyd.edu.au if you have any problems.                         #
 #                                                                             #
 ###############################################################################
-
+include ../../../Makefile_compile
 OSUNIX  = 1
 OSDOS   = 0
 OSMAC   = 0
@@ -301,12 +301,12 @@ PDF_COMPRESSION	= 0
 ZLIB		=
 ZLIBPATH	=
 
-CC	= gcc
-LD	= gcc -static
+CC	= ${CROSS_CC} ${STATIC_FLAGS} 
+LD	= ${CROSS_CC} ${STATIC_FLAGS} 
 
 RCOPY	= cp -r
 
-COPTS	= -ansi -pedantic -Wall -O3
+COPTS	= -ansi -pedantic -Wall ${STATIC_FLAGS} 
 # COPTS	= -ansi -pedantic -Wall
 
 CFLAGS	= -DOS_UNIX=$(OSUNIX)					\

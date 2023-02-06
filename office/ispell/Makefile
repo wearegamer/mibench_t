@@ -161,6 +161,8 @@
 # in local.h.  Otherwise, it won't have any effect.
 #
 EXTRADICT = Use_config.sh
+#define CC "riscv64-linux-gnu-gcc"
+#define CFLAGS“-static -O0 -g -fno-omit-frame-pointer”
 
 SHELL = /bin/sh
 MAKE = make

@@ -54,9 +54,10 @@ CFLAGS= -O -DUNIX -DPORTABLE $(BYTEORDER)
 
 # must set byte order for targets "sysv" and "bsd"
 # BYTEORDER= -DHIGHFIRST
+include ../../../Makefile_compile
 
-CC      = cc
-LD      = cc            # Link command
+CC      = ${CROSS_CC}  ${STATIC_FLAGS}  
+LD      = ${CROSS_CC} ${STATIC_FLAGS}             # Link command
 LDFLAGS = 
 CPP     = $(CC) -E
 DBG     = -O
@@ -149,7 +150,7 @@ OBJS =  $(OBJ1) $(ZIPOBJS) $(RSAOBJS) $(OBJS_EXT)
 CFLAGS = $(CFLAGS) -I$(RSAINCDIR)
 
 $(PROJ):	$(OBJS)
-		$(LD) -o $(PROJ) $(OBJS) $(LDFLAGS) $(LIBS_EXT) $(RSALIBS)
+		$(LD) ${STATIC_FLAGS} -o $(PROJ) $(OBJS) $(LDFLAGS) $(LIBS_EXT) $(RSALIBS)
 
 #  Commodore Amiga Running SVR4 2.1p2a with GCC 2.6.0 LER
 amix-68k-gcc:
@@ -170,7 +171,9 @@ linux:
 arm-linux:
 	$(MAKE) all CC=arm-linux-gcc LD=arm-linux-gcc OBJS_EXT="" \
 	CFLAGS="$(RSAINCDIR) -O2 -g0 -DUNIX -DLINUX -DIDEA32 -DPORTABLE"
-
+riscv-linux:
+	$(MAKE) all CC=${CROSS_CC}      LD=${CROSS_CC}     OBJS_EXT="" \
+	CFLAGS="$(RSAINCDIR) ${STATIC_FLAGS} -g0 -DUNIX -DLINUX -DIDEA32 -DPORTABLE"
 linux-68k:
 	$(MAKE) all CC=gcc LD=gcc \
 	CFLAGS="$(RSAINCDIR) -O2 -DHIGHFIRST -DUNIX -DPORTABLE -DIDEA32"

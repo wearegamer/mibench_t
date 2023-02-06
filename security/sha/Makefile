@@ -2,11 +2,11 @@
 # To compile on a "little endian" machine set the LITTLE_ENDIAN flag.
 # To make smaller object code, but run a little slower, don't use UNROLL_LOOPS.
 # To use NIST's modified SHA of 7/11/94, define USE_MODIFIED_SHA
+include ../../Makefile_compile
+CFLAGS = ${STATIC_FLAGS} -Wall
 
-CFLAGS = -O3 -Wall
-
-sha:	sha_driver.o sha.o
-	$(CC) -o $@ sha_driver.o sha.o
-
+sha:	sha_driver.c sha.c
+	echo ${CROSS_CC} 
+	${CROSS_CC} ${CFLAGS} -o sha sha_driver.c sha.c
 clean:
 	rm -rf *.o sha output*

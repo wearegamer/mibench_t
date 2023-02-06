@@ -31,11 +31,11 @@ SASR	= -DSASR
 
 # CC		= /usr/lang/acc
 # CCFLAGS 	= -c -O
-
-CC		= gcc -ansi -pedantic -static
+include ../../Makefile_compile
+CC		= ${CROSS_CC}  ${STATIC_FLAGS}
 # ARM gcc doesn't like the -O1 here...
 #CCFLAGS 	= -c -O1 -DSTUPID_COMPILER -DNeedFunctionPrototypes=1
-CCFLAGS 	= -c -O3 -DSTUPID_COMPILER -DNeedFunctionPrototypes=1
+CCFLAGS 	= -c  -DSTUPID_COMPILER -DNeedFunctionPrototypes=1
 
 LD 		= $(CC)
 
@@ -301,11 +301,11 @@ $(TOAST):	$(BIN) $(TOAST_OBJECTS) $(LIBGSM)
 		$(LD) $(LFLAGS) -o $(TOAST) $(TOAST_OBJECTS) $(LIBGSM) $(LDLIB)
 
 $(UNTOAST):	$(BIN) $(TOAST)
-		-rm $(RMFLAGS) $(UNTOAST)
+		
 		$(LN) $(TOAST) $(UNTOAST)
 
 $(TCAT):	$(BIN) $(TOAST)
-		-rm $(RMFLAGS) $(TCAT)
+		
 		$(LN) $(TOAST) $(TCAT)
 
 

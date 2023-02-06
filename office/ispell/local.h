@@ -86,6 +86,8 @@
 /*
  * Important directory paths
  */
+#define CC "riscv64-linux-gnu-gcc"
+#define CFLAGS "-static -O0 -g -fno-omit-frame-pointer"
 #define BINDIR	"/usr/local/bin"
 #define LIBDIR	"."
 #define ELISPDIR "/usr/local/lib/emacs/site-lisp"

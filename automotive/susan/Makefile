@@ -1,5 +1,6 @@
+include ../../Makefile_compile
 susan: susan.c Makefile
-	gcc -static -O4 -o susan susan.c -lm 
+	${CROSS_CC}  ${STATIC_FLAGS} -o susan susan.c -lm 
 
 clean:
 	rm -rf susan output*

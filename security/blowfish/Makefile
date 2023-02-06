@@ -19,8 +19,9 @@ OPTS=		 # use for pentium pro, Alpha and HP
 MAKE=make -f Makefile
 #CC=cc
 #CFLAG= -O
-
-CFLAG= -static -O3
+include ../../Makefile_compile
+CC=${CROSS_CC}
+CFLAG= ${STATIC_FLAGS}
 
 CFLAGS=$(OPTS) $(CFLAG)
 CPP=$(CC) -E

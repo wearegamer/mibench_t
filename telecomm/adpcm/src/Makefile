@@ -11,13 +11,14 @@
 # Also, on Sun machines, in order to use the SPIXTOOLS and SHADE,
 # uncomment this option: -static.
 #
+include ../../../Makefile_compile
 #LFLAGS = -mv8
 LFLAGS = $(LFLAGS) -static
 #
 # End of addition
 ######################################################################
-CFLAGS = -static -O3
-
+CFLAGS = -static -O0
+CC=${CROSS_CC}  ${STATIC_FLAGS}
 # May need this on a sun:
 # CFLAGS=-O -I/usr/demo/SOUND
 
@@ -46,13 +47,13 @@ sgidaudio: sgidaudio.o adpcm.o
 	$(CC) sgidaudio.o adpcm.o -o sgidaudio -laudiofile -lm
 
 rawcaudio: rawcaudio.o adpcm.o
-	$(CC) $(CFLAGS) rawcaudio.o adpcm.o -o rawcaudio
+	$(CC)  rawcaudio.o adpcm.o -o rawcaudio
 
 rawdaudio: rawdaudio.o adpcm.o
-	$(CC) $(CFLAGS) rawdaudio.o adpcm.o -o rawdaudio
+	$(CC)  rawdaudio.o adpcm.o -o rawdaudio
 
 timing: timing.o adpcm.o
-	$(CC) $(CFLAGS) timing.o adpcm.o -o timing
+	$(CC)  timing.o adpcm.o -o timing
 
 adpcm.shar: $(ALLSRC)
 	shar $(ALLSRC) > adpcm.shar

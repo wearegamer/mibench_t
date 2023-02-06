@@ -7,7 +7,7 @@
 
 # For compiling with source and object files in different directories.
 srcdir = .
-
+include ../../../Makefile_compile
 # Where to install the programs and man pages.
 prefix = /usr/local
 exec_prefix = ${prefix}
@@ -20,10 +20,10 @@ manext = 1
 mandir = $(prefix)/man/man$(manext)
 
 # The name of your C compiler:
-CC= gcc
+CC= ${CROSS_CC} ${STATIC_FLAGS}
 
 # You may need to adjust these cc options:
-CFLAGS= -O  -I$(srcdir)
+CFLAGS=   -I$(srcdir)
 # Generally, we recommend defining any configuration symbols in jconfig.h,
 # NOT via -D switches here.
 # However, any special defines for ansi2knr.c may be included here:
@@ -126,7 +126,7 @@ all:  libjpeg.a cjpeg djpeg jpegtran rdjpgcom wrjpgcom
 # 	$(MV) T$*.o $*.o
 
 ansi2knr: ansi2knr.c
-	$(CC) $(CFLAGS) $(ANSI2KNRFLAGS) -o ansi2knr ansi2knr.c
+	$(CC) $(CFLAGS) $(ANSI2KNRFLAGS)    -o ansi2knr ansi2knr.c
 
 libjpeg.a:  $(LIBOBJECTS)
 	$(RM) libjpeg.a
@@ -134,19 +134,19 @@ libjpeg.a:  $(LIBOBJECTS)
 	$(AR2) libjpeg.a
 
 cjpeg: $(COBJECTS) libjpeg.a
-	$(LN) $(LDFLAGS) -o cjpeg $(COBJECTS) libjpeg.a $(LDLIBS)
+	$(LN) $(LDFLAGS)  -o cjpeg $(COBJECTS) libjpeg.a $(LDLIBS)
 
 djpeg: $(DOBJECTS) libjpeg.a
 	$(LN) $(LDFLAGS) -o djpeg $(DOBJECTS) libjpeg.a $(LDLIBS)
 
 jpegtran: $(TROBJECTS) libjpeg.a
-	$(LN) $(LDFLAGS) -o jpegtran $(TROBJECTS) libjpeg.a $(LDLIBS)
+	$(LN) $(LDFLAGS)  -o jpegtran $(TROBJECTS) libjpeg.a $(LDLIBS)
 
 rdjpgcom: rdjpgcom.o
-	$(LN) $(LDFLAGS) -o rdjpgcom rdjpgcom.o $(LDLIBS)
+	$(LN) $(LDFLAGS)  -o rdjpgcom rdjpgcom.o $(LDLIBS)
 
 wrjpgcom: wrjpgcom.o
-	$(LN) $(LDFLAGS) -o wrjpgcom wrjpgcom.o $(LDLIBS)
+	$(LN) $(LDFLAGS)  -o wrjpgcom wrjpgcom.o $(LDLIBS)
 
 jconfig.h: jconfig.doc
 	echo You must prepare a system-dependent jconfig.h file.

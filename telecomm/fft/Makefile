@@ -1,15 +1,15 @@
 OBJ = main.o fftmisc.o  fourierf.o
 FILE = main.c fftmisc.c  fourierf.c
-CFLAGS = -static -O3 -g
 
+include ../../Makefile_compile
 fft: ${OBJ} Makefile
-	${CC} ${CFLAGS} ${OBJ} -o fft -lm
+	${CROSS_CC}  ${STATIC_FLAGS}  ${OBJ} -o fft -lm
 fftmisc.o: fftmisc.c
-	${CC} ${CFLAGS} -c fftmisc.c
+	${CROSS_CC}  ${STATIC_FLAGS}  -c fftmisc.c
 fourierf.o: fourierf.c
-	${CC} ${CFLAGS} -c fourierf.c
+	${CROSS_CC}  ${STATIC_FLAGS}  -c fourierf.c
 main.o: main.c
-	${CC} ${CFLAGS} -c main.c
+	${CROSS_CC}  ${STATIC_FLAGS}  -c main.c
 
 clean:
 	rm -rf *.o fft output*

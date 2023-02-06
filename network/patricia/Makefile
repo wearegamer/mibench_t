@@ -1,5 +1,6 @@
+include ../../Makefile_compile
 patricia: patricia.c patricia_test.c
-	gcc -static patricia.c patricia_test.c -O3 -o patricia
+	${CROSS_CC}  ${STATIC_FLAGS} patricia.c patricia_test.c  -o patricia
 
 clean:
 	rm -rf patricia output*

@@ -1,0 +1,6 @@
+STATIC_FLAGS := -static -O0 -g -fno-omit-frame-pointer
+CROSS_COMPILE := riscv64-linux-gnu-
+#CROSS_CC      := $(CROSS_COMPILE)$(CC)
+
+CROSS_CC      := $(CROSS_COMPILE)gcc
+

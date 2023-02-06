@@ -94,15 +94,14 @@ void fillrand(char *buf, int len)
         buf[i] = r[count++];
     }
 }    
-
 int encfile(FILE *fin, FILE *fout, aes *ctx, char* fn)
 {   char            inbuf[16], outbuf[16];
-    fpos_t          flen;
+    long int          flen;
     unsigned long   i=0, l=0;
 
     fillrand(outbuf, 16);           /* set an IV for CBC mode           */
     fseek(fin, 0, SEEK_END);        /* get the length of the file       */
-    fgetpos(fin, &flen);            /* and then reset to start          */
+    flen = ftell(fin);            /* and then reset to start          */
     fseek(fin, 0, SEEK_SET);        
     fwrite(outbuf, 1, 16, fout);    /* write the IV to the output       */
     fillrand(inbuf, 1);             /* make top 4 bits of a byte random */
@@ -129,36 +128,7 @@ int encfile(FILE *fin, FILE *fout, aes *ctx, char* fn)
                                     /* in all but first round read 16   */
         l = 16;                     /* bytes into the buffer            */
     }
-
-    /* except for files of length less than two blocks we now have one  */
-    /* byte from the previous block and 'i' bytes from the current one  */
-    /* to encrypt and 15 - i empty buffer positions. For files of less  */
-    /* than two blocks (0 or 1) we have i + 1 bytes and 14 - i empty    */
-    /* buffer position to set to zero since the 'count' byte is extra   */
-
-    if(l == 15)                         /* adjust for extra byte in the */
-        ++i;                            /* in the first block           */
-
-    if(i)                               /* if bytes remain to be output */
-    {
-        while(i < 16)                   /* clear empty buffer positions */
-            inbuf[i++] = 0;
-     
-        for(i = 0; i < 16; ++i)         /* xor in previous cipher text  */
-            inbuf[i] ^= outbuf[i]; 
-
-        encrypt(inbuf, outbuf, ctx);    /* encrypt and output it        */
-
-        if(fwrite(outbuf, 1, 16, fout) != 16)
-        {
-            printf("Error writing to output file: %s\n", fn);
-            return -8;
-        }
-    }
-        
-    return 0;
 }
-
 int decfile(FILE *fin, FILE *fout, aes *ctx, char* ifn, char* ofn)
 {   char    inbuf1[16], inbuf2[16], outbuf[16], *bp1, *bp2, *tp;
     int     i, l, flen;
